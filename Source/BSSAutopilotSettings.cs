@@ -1,8 +1,7 @@
-using System;
 using System.Reflection;
 using KSP.Localization;
 
-namespace BetterSandboxSpecializations
+namespace BetterSandboxSpecializations.Autopilot
 {
     public class BSSAutopilotSettings : GameParameters.CustomParameterNode
     {
@@ -44,6 +43,7 @@ namespace BetterSandboxSpecializations
         }
         #endregion
 
+        #region UI Elements
         // #BSS_LOC_APSAS_gm = "The game mode is"
         [GameParameters.CustomStringParameterUI("#BSS_LOC_APSAS_gm", autoPersistance = false, gameMode = gmCrr)]
         public string gmDispCrr = Localizer.Format("#autoLOC_190722"); // #autoLOC_190722 = Career
@@ -84,21 +84,20 @@ namespace BetterSandboxSpecializations
         public string reqPilotOn = Localizer.Format("#BSS_LOC_APSAS_reqPilot_on_desc");
         [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=4)]
         public string reqPilotOff = Localizer.Format("#BSS_LOC_APSAS_reqPilot_off_desc");
-
-
+        #endregion
 
         public override bool Enabled(MemberInfo member, GameParameters parameters)
         {
             if (member.Name == "requirePilotForSAS") return true;
             if (member.Name.StartsWith("gmDisp")) return true;
-            bool useXP = parameters.CustomParams<GameParameters.AdvancedParams>().EnableKerbalExperience;
+            bool useXP = parameters.EnableKerbalExperience();
             if (member.Name == "useXPon" || member.Name == "useXPdesc") return useXP;
             if (member.Name == "useXPoff") return !useXP;
-            bool freeSAS = parameters.CustomParams<GameParameters.AdvancedParams>().EnableFullSASInSandbox;
+            bool freeSAS = parameters.EnableFullSASInSandbox();
             if (member.Name == "freeSASon" || member.Name == "freeSASdesc") return !useXP && freeSAS;
             if (member.Name == "freeSASoff" || member.Name == "behaviorCustom") return !useXP && !freeSAS;
             if (member.Name == "behaviorStock") return useXP || freeSAS;
-            bool reqPilot = parameters.CustomParams<BSSAutopilotSettings>().requirePilotForSAS;
+            bool reqPilot = parameters.RequirePilotForSAS();
             if (member.Name == "reqPilotOn") return !useXP && !freeSAS && reqPilot;
             if (member.Name == "reqPilotOff") return !useXP && !freeSAS && !reqPilot;
             return true;
@@ -108,8 +107,8 @@ namespace BetterSandboxSpecializations
         {
             if (member.Name == "requirePilotForSAS")
                 return
-                    !parameters.CustomParams<GameParameters.AdvancedParams>().EnableKerbalExperience &&
-                    !parameters.CustomParams<GameParameters.AdvancedParams>().EnableFullSASInSandbox;
+                    !parameters.EnableKerbalExperience() &&
+                    !parameters.EnableFullSASInSandbox();
             return true;
         }
 

@@ -1,6 +1,6 @@
 using Experience;
 
-namespace BetterSandboxSpecializations
+namespace BetterSandboxSpecializations.Autopilot
 {
     public class SandboxAutopilotSkill : ExperienceEffect
     {
