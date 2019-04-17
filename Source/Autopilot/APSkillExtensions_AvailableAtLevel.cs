@@ -4,13 +4,13 @@ using Harmony;
 namespace BetterSandboxSpecializations.Autopilot
 {
     // class APSkillExtensions
-    // - public static bool AvailableAtLevel(this VesselAutopilot.AutopilotMode mode, Vessel vessel)
     // https://kerbalspaceprogram.com/api/class_a_p_skill_extensions.html
 
+    // public static bool AvailableAtLevel(this VesselAutopilot.AutopilotMode mode, Vessel vessel)
     [HarmonyPatch(typeof(APSkillExtensions))]
     [HarmonyPatch("AvailableAtLevel")]
     [HarmonyPatch(new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(Vessel) })]
-    internal class APSkillExtensions_AvailableAtLevel
+    internal class APSkillExtensions_AvailableAtLevel_vessel
     {
         [HarmonyPrefix]
         private static bool Prefix(VesselAutopilot.AutopilotMode mode, Vessel vessel, ref bool __result)
@@ -81,4 +81,26 @@ namespace BetterSandboxSpecializations.Autopilot
             */
         }
     }
+
+    // public static bool AvailableAtLevel(this VesselAutopilot.AutopilotMode mode, int skillLvl)
+    [HarmonyPatch(typeof(APSkillExtensions))]
+    [HarmonyPatch("AvailableAtLevel")]
+    [HarmonyPatch(new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(int) })]
+    internal class APSkillExtensions_AvailableAtLevel_int
+    {
+        [HarmonyPrefix]
+        private static bool Prefix(VesselAutopilot.AutopilotMode mode, int skillLvl, ref bool __result)
+        {
+            if (
+                HighLogic.CurrentGame.Parameters.EnableKerbalExperience() ||
+                HighLogic.CurrentGame.Parameters.EnableFullSASInSandbox() ||
+                !( HighLogic.CurrentGame.Mode == Game.Modes.SANDBOX || HighLogic.CurrentGame.Mode == Game.Modes.SCIENCE_SANDBOX || HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
+            )
+                return true;
+
+            __result = skillLvl >= mode.GetRequiredSkill();
+            return false;
+        }
+    }
+
 }
