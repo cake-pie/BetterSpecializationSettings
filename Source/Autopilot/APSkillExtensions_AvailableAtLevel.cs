@@ -15,22 +15,6 @@ namespace BetterSandboxSpecializations.Autopilot
         [HarmonyPrefix]
         private static bool Prefix(VesselAutopilot.AutopilotMode mode, Vessel vessel, ref bool __result)
         {
-            // Use stock behavior when any of the following is true
-            if (
-                // "Enable Kerbal Experience" is on (user adjustable; default ON in career, OFF in science and sandbox)
-                //   Stock behavior requires Pilot (ExperienceEffect.AutopilotSkill) for crewed, ModuleSAS for uncrewed
-                HighLogic.CurrentGame.Parameters.EnableKerbalExperience() ||
-
-                // "All SAS Modes on all probes" is on (user adjustable in science and sandbox; default OFF; not available in career)
-                //   Stock behavior effectively gives all SAS for free all the time, since uncrewed doesn't require ModuleSAS, and lack of qualified crew just falls back on uncrewed anyway
-                HighLogic.CurrentGame.Parameters.EnableFullSASInSandbox() ||
-
-                // In any game mode other than career, science, or sandbox, which we don't want to mess with
-                !( HighLogic.CurrentGame.Mode == Game.Modes.SANDBOX || HighLogic.CurrentGame.Mode == Game.Modes.SCIENCE_SANDBOX || HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
-            )
-                return true;
-
-            // Modded behavior
             __result = vessel.VesselValues.AutopilotSkill.value >= mode.GetRequiredSkill();
             return false;
 
@@ -91,16 +75,8 @@ namespace BetterSandboxSpecializations.Autopilot
         [HarmonyPrefix]
         private static bool Prefix(VesselAutopilot.AutopilotMode mode, int skillLvl, ref bool __result)
         {
-            if (
-                HighLogic.CurrentGame.Parameters.EnableKerbalExperience() ||
-                HighLogic.CurrentGame.Parameters.EnableFullSASInSandbox() ||
-                !( HighLogic.CurrentGame.Mode == Game.Modes.SANDBOX || HighLogic.CurrentGame.Mode == Game.Modes.SCIENCE_SANDBOX || HighLogic.CurrentGame.Mode == Game.Modes.CAREER)
-            )
-                return true;
-
             __result = skillLvl >= mode.GetRequiredSkill();
             return false;
         }
     }
-
 }
