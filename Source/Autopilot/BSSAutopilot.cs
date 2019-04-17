@@ -69,15 +69,19 @@ namespace BetterSandboxSpecializations.Autopilot
                 List<Vessel> vessels = FlightGlobals.VesselsLoaded;
                 for (int i = 0; i < vessels.Count; i++)
                 {
-                    List<ProtoCrewMember> crew = vessels[i].GetVesselCrew();
-                    for (int j = 0; j < crew.Count; j++)
+                    List<Part> parts = vessels[i].parts;
+                    for (int j = 0; j < parts.Count; j++)
                     {
-                        Part part = crew[j].KerbalRef?.InPart;
-                        SandboxAutopilotSkill skill = crew[j].GetEffect<SandboxAutopilotSkill>() as SandboxAutopilotSkill;
-                        if (part != null && skill != null)
+                        if (parts[j].CrewCapacity == 0) continue;
+                        List<ProtoCrewMember> crew = parts[j].protoModuleCrew;
+                        for (int k = 0; k < crew.Count; k++)
                         {
-                            if (use) skill.Register(part);
-                            else skill.ForceUnregister(part);
+                            SandboxAutopilotSkill skill = crew[j].GetEffect<SandboxAutopilotSkill>() as SandboxAutopilotSkill;
+                            if (skill != null)
+                            {
+                                if (use) skill.Register(parts[j]);
+                                else skill.ForceUnregister(parts[j]);
+                            }
                         }
                     }
                 }
