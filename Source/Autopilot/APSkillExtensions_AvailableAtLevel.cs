@@ -57,7 +57,7 @@ namespace BetterSandboxSpecializations.Autopilot
                     }
 
                     // Checking crew is the part that needs fixing:
-                    // Stock default sandbox behavior ( KerbalExperienceEnabled FALSE, EnableFullSASInSandbox FALSE ) purports to give all crew full SAS
+                    // Stock default sandbox behavior ( EnableKerbalExperience FALSE, EnableFullSASInSandbox FALSE ) purports to give all crew full SAS
                     // But testing shows that it seems to actually check for ExperienceEffect.{ AutopilotSkill, RepairSkill, ScienceSkill } in lieu of { Pilot, Engineer, Scientist } respectively
                     // This means that other specializations (from mods) will not qualify if they don't have one of these three skills!
 
