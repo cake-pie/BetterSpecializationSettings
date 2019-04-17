@@ -83,9 +83,9 @@ namespace BetterSandboxSpecializations.Autopilot
         [GameParameters.CustomStringParameterUI("", autoPersistance = false)]
         public string behaviorCustom = Localizer.Format("#BSS_LOC_APSAS_custom_behavior");  // "Custom behavior is in use:"
 
-        [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=4)]
+        [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=5)]
         public string useXPdesc = Localizer.Format("#BSS_LOC_APSAS_useXP_on_desc");
-        [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=2)]
+        [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=3)]
         public string freeSASdesc = Localizer.Format("#BSS_LOC_APSAS_freeSAS_on_desc");
         [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=4)]
         public string reqPilotOn = Localizer.Format("#BSS_LOC_APSAS_reqPilot_on_desc");
