@@ -26,7 +26,7 @@ namespace BetterSandboxSpecializations
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            autopilot = new Autopilot.BSSAutopilot(harmony);
+            autopilot = new Autopilot.BSSAutopilot();
         }
 
         private void OnDestroy()

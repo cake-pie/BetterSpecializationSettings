@@ -10,21 +10,27 @@ namespace BetterSandboxSpecializations.Autopilot
         internal static bool KSP_1_6_plus = true;
 
         private const BindingFlags bf = BindingFlags.NonPublic | BindingFlags.Static;
+        private readonly MethodInfo APSE_AALV_original = null;
+        private readonly MethodInfo APSE_AALV_patch = null;
+        private readonly MethodInfo APSE_AALI_original = null;
+        private readonly MethodInfo APSE_AALI_patch = null;
 
-        public BSSAutopilot(HarmonyInstance harmony)
+        private bool usePatch = false;
+
+        public BSSAutopilot()
         {
             KSP_1_6_plus = BSSAddon.kspAtLeast(1,6);
 
             // Backward compatibility for KSP < 1.6 by patching in 1.6+ API only where available
-            if (KSP_1_6_plus) {
-                harmony.Patch(typeof(BSSAutopilotExtensions).GetMethod("EnableFullSASInSandbox", bf),
+            if (KSP_1_6_plus)
+            {
+                BSSAddon.harmony.Patch(typeof(BSSAutopilotExtensions).GetMethod("EnableFullSASInSandbox", bf),
                     prefix: new HarmonyMethod( typeof(BSSAutopilotExtensions_EnableFullSASInSandbox).GetMethod("Prefix", bf) ));
-
-                harmony.Patch(typeof(APSkillExtensions).GetMethod("AvailableAtLevel", new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(Vessel) }),
-                    prefix: new HarmonyMethod( typeof(APSkillExtensions_AvailableAtLevel_vessel).GetMethod("Prefix", bf) ));
+                APSE_AALV_original = typeof(APSkillExtensions).GetMethod("AvailableAtLevel", new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(Vessel) });
+                APSE_AALV_patch = typeof(APSkillExtensions_AvailableAtLevel_vessel).GetMethod("Prefix", bf);
             }
-            harmony.Patch(typeof(APSkillExtensions).GetMethod("AvailableAtLevel", new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(int) }),
-                prefix: new HarmonyMethod( typeof(APSkillExtensions_AvailableAtLevel_int).GetMethod("Prefix", bf) ));
+            APSE_AALI_original = typeof(APSkillExtensions).GetMethod("AvailableAtLevel", new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(int) });
+            APSE_AALI_patch = typeof(APSkillExtensions_AvailableAtLevel_int).GetMethod("Prefix", bf);
 
             GameEvents.onLevelWasLoaded.Add(OnLevelWasLoaded);
             GameEvents.onGameStateCreated.Add(OnGameStateCreated);
@@ -45,38 +51,78 @@ namespace BetterSandboxSpecializations.Autopilot
         #region GameEvents
         private void OnLevelWasLoaded(GameScenes gs)
         {
-            // turn off sandbox autopilot whenever returning to main menu
+            // turn off sandbox autopilot and unpatch whenever returning to main menu
             if (gs == GameScenes.MAINMENU)
+            {
+                if (usePatch) unpatch();
                 updateSandboxAutopilotSkill(false);
+            }
         }
         private void OnGameStateCreated(Game g)
         {
             Log("OnGameStateCreated");
-            updateSandboxAutopilotSkill(calcUseSandboxAutopilot(g));
+            applySettings(g);
         }
         /*private void OnGameStateLoad(ConfigNode node)
         {
             Log("OnGameStateLoad");
-            updateSandboxAutopilotSkill(calcUse(HighLogic.CurrentGame));
+            applySettings(HighLogic.CurrentGame);
         }*/
         private void OnGameStatePostLoad(ConfigNode node)
         {
             Log("OnGameStatePostLoad");
-            updateSandboxAutopilotSkill(calcUseSandboxAutopilot(HighLogic.CurrentGame));
+            applySettings(HighLogic.CurrentGame);
         }
         private void OnGameSettingsApplied()
         {
             Log("OnGameSettingsApplied");
-            updateSandboxAutopilotSkill(calcUseSandboxAutopilot(HighLogic.CurrentGame));
+            applySettings(HighLogic.CurrentGame);
         }
         #endregion
 
-        private bool calcUseSandboxAutopilot(Game g)
+        private void applySettings(Game g)
         {
-            return !(
+            // In any game mode other than career, science, or sandbox, which we don't want to mess with
+            if (!( g.Mode == Game.Modes.SANDBOX || g.Mode == Game.Modes.SCIENCE_SANDBOX || g.Mode == Game.Modes.CAREER))
+                return;
+
+            if (
+                // "Enable Kerbal Experience" is on (user adjustable; default ON in career, OFF in science and sandbox)
+                //   Stock behavior requires Pilot (ExperienceEffect.AutopilotSkill) for crewed, ModuleSAS for uncrewed
                 g.Parameters.EnableKerbalExperience() ||
-                g.Parameters.EnableFullSASInSandbox() ||
-                g.Parameters.RequirePilotForSAS() );
+
+                // KSP 1.6+ "All SAS Modes on all probes" is on (user adjustable in science and sandbox; default OFF; not available in career)
+                //   Stock behavior effectively gives all SAS for free all the time, since uncrewed doesn't require ModuleSAS, and lack of qualified crew just falls back on uncrewed anyway
+                // KSP < 1.6 checks our own implementation of this option (Stock behavior is all SAS for free all the time)
+                g.Parameters.EnableFullSASInSandbox()
+            )
+            {
+                if (usePatch) unpatch();
+                updateSandboxAutopilotSkill(false);
+            }
+            else
+            {
+                if (!usePatch) patch();
+
+                if (g.Parameters.RequirePilotForSAS())
+                    updateSandboxAutopilotSkill(false);
+                else
+                    updateSandboxAutopilotSkill(true);
+            }
+        }
+
+        private void patch()
+        {
+            usePatch = true;
+            if (KSP_1_6_plus) BSSAddon.harmony.Patch(APSE_AALV_original, new HarmonyMethod(APSE_AALV_patch));
+            BSSAddon.harmony.Patch(APSE_AALI_original, new HarmonyMethod(APSE_AALI_patch));
+        }
+
+        private void unpatch()
+        {
+            usePatch = false;
+            if (KSP_1_6_plus) BSSAddon.harmony.Unpatch(APSE_AALV_original, APSE_AALV_patch);
+            BSSAddon.harmony.Unpatch(APSE_AALI_original, APSE_AALI_patch);
         }
 
         private void updateSandboxAutopilotSkill(bool use)
