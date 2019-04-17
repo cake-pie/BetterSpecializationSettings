@@ -7,12 +7,22 @@ namespace BetterSandboxSpecializations.Autopilot
 {
     internal class BSSAutopilot
     {
+        internal static bool KSP_1_6_plus = true;
+
         private const BindingFlags bf = BindingFlags.NonPublic | BindingFlags.Static;
 
         public BSSAutopilot(HarmonyInstance harmony)
         {
-            harmony.Patch(typeof(APSkillExtensions).GetMethod("AvailableAtLevel", new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(Vessel) }),
-                prefix: new HarmonyMethod( typeof(APSkillExtensions_AvailableAtLevel_vessel).GetMethod("Prefix", bf) ));
+            KSP_1_6_plus = BSSAddon.kspAtLeast(1,6);
+
+            // Backward compatibility for KSP < 1.6 by patching in 1.6+ API only where available
+            if (KSP_1_6_plus) {
+                harmony.Patch(typeof(BSSAutopilotExtensions).GetMethod("EnableFullSASInSandbox", bf),
+                    prefix: new HarmonyMethod( typeof(BSSAutopilotExtensions_EnableFullSASInSandbox).GetMethod("Prefix", bf) ));
+
+                harmony.Patch(typeof(APSkillExtensions).GetMethod("AvailableAtLevel", new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(Vessel) }),
+                    prefix: new HarmonyMethod( typeof(APSkillExtensions_AvailableAtLevel_vessel).GetMethod("Prefix", bf) ));
+            }
             harmony.Patch(typeof(APSkillExtensions).GetMethod("AvailableAtLevel", new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(int) }),
                 prefix: new HarmonyMethod( typeof(APSkillExtensions_AvailableAtLevel_int).GetMethod("Prefix", bf) ));
 
@@ -114,12 +124,26 @@ namespace BetterSandboxSpecializations.Autopilot
 
         internal static bool EnableFullSASInSandbox(this GameParameters p)
         {
-            return p.CustomParams<GameParameters.AdvancedParams>().EnableFullSASInSandbox;
+            // This is our own implementation of AdvancedParams EnableFullSASInSandbox for KSP < 1.6
+            // For KSP 1.6+ this gets patched out and the stock setting will be used instead
+            return p.CustomParams<BSSAutopilotSettings>().enableFullSASInSandbox;
         }
 
         internal static bool RequirePilotForSAS(this GameParameters p)
         {
             return p.CustomParams<BSSAutopilotSettings>().requirePilotForSAS;
+        }
+    }
+
+    [HarmonyPatch(typeof(BSSAutopilotExtensions))]
+    [HarmonyPatch("EnableFullSASInSandbox")]
+    internal class BSSAutopilotExtensions_EnableFullSASInSandbox
+    {
+        [HarmonyPrefix]
+        private static bool Prefix(GameParameters p, ref bool __result)
+        {
+            __result = p.CustomParams<GameParameters.AdvancedParams>().EnableFullSASInSandbox;
+            return false;
         }
     }
 }
