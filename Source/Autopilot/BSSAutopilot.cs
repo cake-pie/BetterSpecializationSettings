@@ -71,7 +71,8 @@ namespace BetterSandboxSpecializations.Autopilot
 
         private void updateSandboxAutopilotSkill(bool use)
         {
-            Log("Sandbox autopilot skill {0}", (use ? "ON":"OFF"));
+            if(SandboxAutopilotSkill.use == use) return;
+            Log("Sandbox autopilot skill {0}", (use ? "OFF -> ON" : "ON -> OFF"));
             SandboxAutopilotSkill.use = use;
 
             if (HighLogic.LoadedSceneIsFlight)
