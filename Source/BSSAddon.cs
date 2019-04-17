@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using UnityEngine;
+﻿using UnityEngine;
 using Harmony;
 
 namespace BetterSandboxSpecializations
@@ -26,9 +25,8 @@ namespace BetterSandboxSpecializations
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-            autopilot = new Autopilot.BSSAutopilot();
+            autopilot = new Autopilot.BSSAutopilot(harmony);
         }
 
         private void OnDestroy()

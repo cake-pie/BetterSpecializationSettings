@@ -1,11 +1,21 @@
+using System;
+using System.Reflection;
 using System.Collections.Generic;
+using Harmony;
 
 namespace BetterSandboxSpecializations.Autopilot
 {
     internal class BSSAutopilot
     {
-        public BSSAutopilot()
+        private const BindingFlags bf = BindingFlags.NonPublic | BindingFlags.Static;
+
+        public BSSAutopilot(HarmonyInstance harmony)
         {
+            harmony.Patch(typeof(APSkillExtensions).GetMethod("AvailableAtLevel", new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(Vessel) }),
+                prefix: new HarmonyMethod( typeof(APSkillExtensions_AvailableAtLevel_vessel).GetMethod("Prefix", bf) ));
+            harmony.Patch(typeof(APSkillExtensions).GetMethod("AvailableAtLevel", new Type[] { typeof(VesselAutopilot.AutopilotMode), typeof(int) }),
+                prefix: new HarmonyMethod( typeof(APSkillExtensions_AvailableAtLevel_int).GetMethod("Prefix", bf) ));
+
             GameEvents.onLevelWasLoaded.Add(OnLevelWasLoaded);
             GameEvents.onGameStateCreated.Add(OnGameStateCreated);
             //GameEvents.onGameStateLoad.Add(OnGameStateLoad);
