@@ -65,8 +65,8 @@ namespace BetterSandboxSpecializations.Autopilot
         public string freeSASoff = Localizer.Format("#BSS_LOC_off");
 
         [GameParameters.CustomParameterUI(
-            "#BSS_LOC_APSAS_freeSAS_title",                 // "SAS always available"
-            toolTip = "#BSS_LOC_APSAS_freeSAS_tooltip",     // "If on, SAS will always be available."
+            "#BSS_LOC_APSAS_freeSAS_title",                 // "All SAS Modes on all probes"
+            toolTip = "#BSS_LOC_APSAS_freeSAS_tooltip",     // "If on, full SAS functionality is available to all probe cores (and all crew types)."
             gameMode = gmSS
         )]
         public bool enableFullSASInSandbox = false;

@@ -92,8 +92,8 @@ namespace BetterSandboxSpecializations.Autopilot
                 g.Parameters.EnableKerbalExperience() ||
 
                 // KSP 1.6+ "All SAS Modes on all probes" is on (user adjustable in science and sandbox; default OFF; not available in career)
-                //   Stock behavior effectively gives all SAS for free all the time, since uncrewed doesn't require ModuleSAS, and lack of qualified crew just falls back on uncrewed anyway
-                // KSP < 1.6 checks our own implementation of this option (Stock behavior is all SAS for free all the time)
+                //   Stock behavior requires any crew regardless of specialization, whereas uncrewed doesn't require ModuleSAS
+                // KSP < 1.6 checks our own implementation of this option
                 g.Parameters.EnableFullSASInSandbox()
             )
             {

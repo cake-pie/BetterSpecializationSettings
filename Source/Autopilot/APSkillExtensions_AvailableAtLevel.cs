@@ -54,7 +54,7 @@ namespace BetterSandboxSpecializations.Autopilot
                     // and grant it to all non-tourist/civilian specializations (EXPERIENCE_TRAIT)s
 
                     // Then, naively, the first thought would be to implement hasAnyCrewAutopilot(vessel) check in one of two ways:
-                    //  - iterate through all vessel occupants looking for pcm.HasEffect<SandboxAutopilotSkill>() (potentially costly) or
+                    //  - iterate through all command module occupants looking for pcm.HasEffect<SandboxAutopilotSkill>() (potentially costly) or
                     //  - build infrastructure similar to PartValues / VesselValues specifically for the SandboxAutopilotSkill skill
 
                     // Or, we could be smart about it, and have SandboxAutopilotSkill perform OnRegister(part)/OnUnregister(part) selectively
