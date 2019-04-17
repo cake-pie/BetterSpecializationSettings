@@ -86,26 +86,6 @@ namespace BetterSandboxSpecializations.Autopilot
                     }
                 }
             }
-
-            /* Original code: iterating over all kerbals in roster
-            if (HighLogic.LoadedSceneIsGame)
-            {
-                KerbalRoster roster = HighLogic.CurrentGame.CrewRoster;
-                for (int i = 0; i < roster.Count; i++)
-                {
-                    Part part = roster[i].KerbalRef?.InPart;
-                    if (part != null)
-                    {
-                        SandboxAutopilotSkill skill = roster[i].GetEffect<SandboxAutopilotSkill>() as SandboxAutopilotSkill;
-                        if (skill != null)
-                        {
-                            if (use) skill.ForceRegister(part);
-                            else skill.ForceUnregister(part);
-                        }
-                    }
-                }
-            }
-            */
         }
 
         private static void Log(string s, params object[] m)
