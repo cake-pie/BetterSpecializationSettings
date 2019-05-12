@@ -11,12 +11,12 @@ namespace BetterSandboxSpecializations.Autopilot
         ) {}
 
         #region UI Elements
-        // #BSS_LOC_APSAS_gm = "The game mode is"
-        [GameParameters.CustomStringParameterUI("#BSS_LOC_APSAS_gm", autoPersistance = false, gameMode = gmCrr)]
+        // #BSS_LOC_gamemode = "The game mode is"
+        [GameParameters.CustomStringParameterUI("#BSS_LOC_gamemode", autoPersistance = false, gameMode = gmCrr)]
         public string gmDispCrr = Localizer.Format("#autoLOC_190722"); // #autoLOC_190722 = Career
-        [GameParameters.CustomStringParameterUI("#BSS_LOC_APSAS_gm", autoPersistance = false, gameMode = gmSci)]
+        [GameParameters.CustomStringParameterUI("#BSS_LOC_gamemode", autoPersistance = false, gameMode = gmSci)]
         public string gmDispSci = Localizer.Format("#autoLOC_190714"); // #autoLOC_190714 = Science
-        [GameParameters.CustomStringParameterUI("#BSS_LOC_APSAS_gm", autoPersistance = false, gameMode = gmSnd)]
+        [GameParameters.CustomStringParameterUI("#BSS_LOC_gamemode", autoPersistance = false, gameMode = gmSnd)]
         public string gmDispSnd = Localizer.Format("#autoLOC_190706"); // #autoLOC_190706 = Sandbox
 
         // #autoLOC_140970 = Enable Kerbal Experience
@@ -46,9 +46,9 @@ namespace BetterSandboxSpecializations.Autopilot
         public bool requirePilotForSAS = true;
 
         [GameParameters.CustomStringParameterUI("", autoPersistance = false)]
-        public string behaviorStock = Localizer.Format("#BSS_LOC_APSAS_stock_behavior");    // "Stock behavior is in use:"
+        public string behaviorStock = Localizer.Format("#BSS_LOC_stock_behavior");      // "Stock behavior is in use:"
         [GameParameters.CustomStringParameterUI("", autoPersistance = false)]
-        public string behaviorCustom = Localizer.Format("#BSS_LOC_APSAS_custom_behavior");  // "Custom behavior is in use:"
+        public string behaviorCustom = Localizer.Format("#BSS_LOC_custom_behavior");    // "Custom behavior is in use:"
 
         [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=5)]
         public string useXPdesc = Localizer.Format("#BSS_LOC_APSAS_useXP_on_desc");
