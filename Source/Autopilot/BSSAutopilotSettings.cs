@@ -64,6 +64,7 @@ namespace BetterSandboxSpecializations.Autopilot
         {
             if (member.Name == "requirePilotForSAS") return true;
             if (member.Name.StartsWith("gmDisp")) return true;
+
             bool useXP = parameters.EnableKerbalExperience();
             if (member.Name == "useXPon" || member.Name == "useXPdesc") return useXP;
             if (member.Name == "useXPoff") return !useXP;
