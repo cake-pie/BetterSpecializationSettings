@@ -11,6 +11,7 @@ namespace BetterSandboxSpecializations
 
         // individual features
         private Autopilot.BSSAutopilot autopilot;
+        private Repair.BSSRepair repair;
 
         #region Lifecycle
         private void Awake()
@@ -27,6 +28,7 @@ namespace BetterSandboxSpecializations
             DontDestroyOnLoad(gameObject);
 
             autopilot = new Autopilot.BSSAutopilot();
+            repair = new Repair.BSSRepair();
         }
 
         private void OnDestroy()
