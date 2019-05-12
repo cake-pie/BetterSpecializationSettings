@@ -163,11 +163,6 @@ namespace BetterSandboxSpecializations.Autopilot
 
     internal static class BSSAutopilotExtensions
     {
-        internal static bool EnableKerbalExperience(this GameParameters p)
-        {
-            return p.CustomParams<GameParameters.AdvancedParams>().EnableKerbalExperience;
-        }
-
         internal static bool EnableFullSASInSandbox(this GameParameters p)
         {
             // This is our own implementation of AdvancedParams EnableFullSASInSandbox for KSP < 1.6

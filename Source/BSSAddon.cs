@@ -53,4 +53,12 @@ namespace BetterSandboxSpecializations
             Debug.LogFormat($"[BetterSandboxSpecializations] {s}", m);
         }
     }
+
+    internal static class BSSExtensions
+    {
+        internal static bool EnableKerbalExperience(this GameParameters p)
+        {
+            return p.CustomParams<GameParameters.AdvancedParams>().EnableKerbalExperience;
+        }
+    }
 }
