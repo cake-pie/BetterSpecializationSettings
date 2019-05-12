@@ -3,45 +3,12 @@ using KSP.Localization;
 
 namespace BetterSandboxSpecializations.Autopilot
 {
-    public class BSSAutopilotSettings : GameParameters.CustomParameterNode
+    public class BSSAutopilotSettings : BSSSettings
     {
-        private readonly string _title = Localizer.Format("#BSS_LOC_APSAS_title");      // "Autopilot / SAS"
-        private readonly string _displaySection = Localizer.Format("#BSS_LOC_section"); // "Better Sandbox Specializations"
-        private const string _section = "BetterSandboxSpecializations";
-        private const int _order = 1;
-        private const bool _hasPresets = true;
-        private const GameParameters.GameMode gmNM = GameParameters.GameMode.CAREER | GameParameters.GameMode.SCIENCE | GameParameters.GameMode.SANDBOX;
-        private const GameParameters.GameMode gmSS = GameParameters.GameMode.SCIENCE | GameParameters.GameMode.SANDBOX;
-        private const GameParameters.GameMode gmCrr = GameParameters.GameMode.CAREER;
-        private const GameParameters.GameMode gmSci = GameParameters.GameMode.SCIENCE;
-        private const GameParameters.GameMode gmSnd = GameParameters.GameMode.SANDBOX;
-
-        #region Properties
-        public override string Title
-        {
-            get { return _title; }
-        }
-        public override string DisplaySection
-        {
-            get { return _displaySection; }
-        }
-        public override string Section
-        {
-            get { return _section; }
-        }
-        public override int SectionOrder
-        {
-            get { return _order; }
-        }
-        public override bool HasPresets
-        {
-            get { return _hasPresets; }
-        }
-        public override GameParameters.GameMode GameMode
-        {
-            get { return gmNM; }
-        }
-        #endregion
+        public BSSAutopilotSettings() : base(
+            title: Localizer.Format("#BSS_LOC_APSAS_title"), // "Autopilot / SAS"
+            order: 1
+        ) {}
 
         #region UI Elements
         // #BSS_LOC_APSAS_gm = "The game mode is"
