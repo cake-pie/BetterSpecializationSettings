@@ -1,7 +1,7 @@
 using System.Reflection;
 using KSP.Localization;
 
-namespace BetterSandboxSpecializations.Autopilot
+namespace BetterSpecializationSettings.Autopilot
 {
     public class BSSAutopilotSettings : BSSSettings
     {

@@ -1,7 +1,7 @@
 using System;
 using Harmony;
 
-namespace BetterSandboxSpecializations.Autopilot
+namespace BetterSpecializationSettings.Autopilot
 {
     // class APSkillExtensions
     // https://kerbalspaceprogram.com/api/class_a_p_skill_extensions.html

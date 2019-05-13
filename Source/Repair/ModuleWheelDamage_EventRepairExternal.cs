@@ -2,7 +2,7 @@ using ModuleWheels;
 using KSP.Localization;
 using Harmony;
 
-namespace BetterSandboxSpecializations.Repair
+namespace BetterSpecializationSettings.Repair
 {
     // class ModuleWheels.ModuleWheelDamage
     // https://kerbalspaceprogram.com/api/class_module_wheels_1_1_module_wheel_damage.html

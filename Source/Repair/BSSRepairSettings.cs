@@ -1,7 +1,7 @@
 using System.Reflection;
 using KSP.Localization;
 
-namespace BetterSandboxSpecializations.Repair
+namespace BetterSpecializationSettings.Repair
 {
     public class BSSRepairSettings : BSSSettings
     {

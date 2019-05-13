@@ -1,13 +1,13 @@
 using System.Reflection;
 using KSP.Localization;
 
-namespace BetterSandboxSpecializations
+namespace BetterSpecializationSettings
 {
     public abstract class BSSSettings : GameParameters.CustomParameterNode
     {
         protected readonly string _title = "";
-        protected readonly string _displaySection = Localizer.Format("#BSS_LOC_section"); // "Better Sandbox Specializations"
-        protected const string _section = "BetterSandboxSpecializations";
+        protected readonly string _displaySection = Localizer.Format("#BSS_LOC_section"); // "Better Specialization Settings"
+        protected const string _section = "BetterSpecializationSettings";
         protected readonly int _order = int.MaxValue;
         protected readonly bool _hasPresets = true;
 

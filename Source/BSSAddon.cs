@@ -1,13 +1,13 @@
 using UnityEngine;
 using Harmony;
 
-namespace BetterSandboxSpecializations
+namespace BetterSpecializationSettings
 {
     [KSPAddon(KSPAddon.Startup.Instantly, true)]
     public class BSSAddon : MonoBehaviour
     {
         public static BSSAddon Instance = null;
-        internal static HarmonyInstance harmony = HarmonyInstance.Create("com.github.cake-pie.BetterSandboxSpecializations");
+        internal static HarmonyInstance harmony = HarmonyInstance.Create("com.github.cake-pie.BetterSpecializationSettings");
 
         // individual features
         private Autopilot.BSSAutopilot autopilot;
@@ -52,7 +52,7 @@ namespace BetterSandboxSpecializations
 
         internal static void Log(string s, params object[] m)
         {
-            Debug.LogFormat($"[BetterSandboxSpecializations] {s}", m);
+            Debug.LogFormat($"[BetterSpecializationSettings] {s}", m);
         }
     }
 

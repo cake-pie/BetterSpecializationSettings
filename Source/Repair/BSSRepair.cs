@@ -1,7 +1,7 @@
 using System.Reflection;
 using Harmony;
 
-namespace BetterSandboxSpecializations.Repair
+namespace BetterSpecializationSettings.Repair
 {
     internal class BSSRepair
     {

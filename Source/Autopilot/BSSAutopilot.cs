@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using Harmony;
 
-namespace BetterSandboxSpecializations.Autopilot
+namespace BetterSpecializationSettings.Autopilot
 {
     internal class BSSAutopilot
     {
