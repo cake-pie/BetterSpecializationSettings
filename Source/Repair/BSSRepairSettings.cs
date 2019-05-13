@@ -35,7 +35,7 @@ namespace BetterSandboxSpecializations.Repair
         public bool requireEngineerForWheelRep = true;
 
         [GameParameters.CustomParameterUI(
-            "#BSS_LOC_REPAIR_ovrlvlreq_title",              // "Override required level for leg / wheel repair"
+            "#BSS_LOC_REPAIR_ovrlvlreq_title",              // "Override required level"
             toolTip = "#BSS_LOC_REPAIR_ovrlvlreq_tooltip",  // "If off, stock behavior will be used.\nIf on, custom setting will be used."
             gameMode = gmNM
         )]
