@@ -56,7 +56,7 @@ namespace BetterSpecializationSettings.Repair
         [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=3)]
         public string enggSkillDesc = Localizer.Format("#BSS_LOC_REPAIR_enggskill_desc", StockLvlReq);
         [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=2)]
-        public string anyEnggDesc = Localizer.Format("#BSS_LOC_REPAIR_reqengg_desc");
+        public string reqEnggDesc = Localizer.Format("#BSS_LOC_REPAIR_reqengg_desc");
         [GameParameters.CustomStringParameterUI("", autoPersistance = false, lines=2)]
         public string anyCrewDesc = Localizer.Format("#BSS_LOC_REPAIR_anycrew_desc");
         #endregion
@@ -83,7 +83,7 @@ namespace BetterSpecializationSettings.Repair
                 else enggSkillDesc = Localizer.Format("#BSS_LOC_REPAIR_enggskill_desc", StockLvlReq.ToString());
                 return true;
             }
-            if (member.Name == "anyEnggDesc") return !useXP && reqEngg;
+            if (member.Name == "reqEnggDesc") return !useXP && reqEngg;
             if (member.Name == "anyCrewDesc") return !useXP && !reqEngg;
             return true;
         }
