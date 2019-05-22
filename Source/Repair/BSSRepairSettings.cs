@@ -35,13 +35,13 @@ namespace BetterSpecializationSettings.Repair
         public bool requireEngineerForWheelRep = true;
 
         [GameParameters.CustomParameterUI(
-            "#BSS_LOC_REPAIR_ovrlvlreq_title",              // "Override required level"
-            toolTip = "#BSS_LOC_REPAIR_ovrlvlreq_tooltip",  // "If off, stock behavior will be used.\nIf on, custom setting will be used."
+            "#BSS_LOC_ovrlvlreq_title",                     // "Override required level"
+            toolTip = "#BSS_LOC_ovrlvlreq_tooltip",         // "If off, stock behavior will be used.\nIf on, custom setting will be used."
             gameMode = gmNM
         )]
         public bool overrideLvlReq = false;
         [GameParameters.CustomIntParameterUI(
-            "#BSS_LOC_REPAIR_lvlreq_title",                 // "Required level"
+            "#BSS_LOC_lvlreq_title",                        // "Required level"
             toolTip = "#BSS_LOC_REPAIR_lvlreq_tooltip",     // "Custom setting for the skill level required to repair legs / wheels."
             minValue = 0, maxValue = 5,
             gameMode = gmNM
