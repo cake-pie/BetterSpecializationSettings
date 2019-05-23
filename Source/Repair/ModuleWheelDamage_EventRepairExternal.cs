@@ -15,7 +15,7 @@ namespace BetterSpecializationSettings.Repair
         [HarmonyPrefix]
         private static bool PrefixRequireEngineer(ModuleWheelDamage __instance)
         {
-            if (FlightGlobals.ActiveVessel.VesselValues.RepairSkill.value < -1)
+            if (FlightGlobals.ActiveVessel.VesselValues.RepairSkill.value < 0)
                 ScreenMessages.PostScreenMessage(Localizer.Format("#BSS_LOC_scrmsg_reqengg"));
             else
                 __instance.SetDamaged(false);
