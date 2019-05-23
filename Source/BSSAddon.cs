@@ -12,6 +12,7 @@ namespace BetterSpecializationSettings
         // individual features
         private Autopilot.BSSAutopilot autopilot;
         private Repair.BSSRepair repair;
+        private ChuteRepack.BSSChuteRepack chuterepack;
 
         #region Lifecycle
         private void Awake()
@@ -29,6 +30,7 @@ namespace BetterSpecializationSettings
 
             autopilot = new Autopilot.BSSAutopilot();
             repair = new Repair.BSSRepair();
+            chuterepack = new ChuteRepack.BSSChuteRepack();
         }
 
         private void OnDestroy()
